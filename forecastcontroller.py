@@ -170,7 +170,6 @@ mean = PlotRecorder('mean', units.minute, units.degC)
 sim.record(mean, lstForecast)
 
 
-
 # Simulate
 sim.reset()
 sim.run(DURATION_TIME, PERIOD_STEP)
