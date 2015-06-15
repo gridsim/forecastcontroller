@@ -1,0 +1,1 @@
+(cd ..;python ./forecastcontroller/forecastcontroller.py)
