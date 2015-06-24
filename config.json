@@ -1,0 +1,40 @@
+{
+  "simulation_configuration":{
+    "duration_day": 1,
+    "decision_duration_day_period": 1,
+    "duration_minute_step": 30,
+    "weather_degree_period_sigma":0.2,
+    "weather_degree_day_sigma":0.4,
+    "cost_sigma": 1,
+    "cost_period_step":
+     [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+      2.0, 2.0, 3.0, 3.0, 4.0, 4.0, 2.0, 2.0, 2.0, 2.0,
+      5.0, 5.0, 7.0, 7.0, 10.0, 10.0, 10.0, 10.0, 8.0, 8.0,
+      4.0, 4.0, 3.0, 3.0, 4.0, 4.0, 6.0, 6.0, 8.0, 8.0,
+      5.0, 5.0, 2.0, 2.0, 1.0, 1.0, 0.0, 0.0]
+  },
+
+  "solver_configuration":{
+    "solvers":["gurobi", "cplex", "cbc", "glpk"],
+    "messages": "false",
+    "time_limit_second":0
+  },
+
+  "device_configuration":{
+    "number": 1,
+    "initial_outside_coupling": 20,
+    "size_min_meter": 20,
+    "size_max_meter": 400,
+    "power_min_watt": 1000,
+    "power_max_watt": 5000,
+    "height_min_meter": 3,
+    "height_max_meter": 50,
+    "hysteresis_user_preference_min": 1,
+    "hysteresis_user_preference_max": 3,
+    "coupling_min": 40,
+    "coupling_max": 90,
+    "temperature_min": 18,
+    "temperature_max": 24
+  }
+
+}

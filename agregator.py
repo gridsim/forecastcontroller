@@ -98,7 +98,7 @@ from deap import creator
 from deap import tools
 from deap import algorithms
 
-DEBUG = True
+DEBUG = False
 
 
 def debug(msg):
@@ -215,9 +215,9 @@ class AgregatorSimulator(ControllerSimulator):
     """
 
     # Used to simulate a forecast controller according the real value
-    MU = 0
-    VARIANCE = 0.24
-    VARIANCE_DAY = 0.4
+    PERIOD_SIGMA = 0.24
+    DAY_SIGMA = 0.4
+    COST_SIGMA = 1
 
     def __init__(self):
         """
@@ -234,9 +234,10 @@ class AgregatorSimulator(ControllerSimulator):
         self.temperature = 0
         self.temperature_outside_forecast = {}
         self.cost_reference = [0]
-        """
-        The cost reference for a day type.
-        """
+
+        self.period_sigma = AgregatorSimulator.PERIOD_SIGMA
+        self.day_sigma = AgregatorSimulator.DAY_SIGMA
+        self.cost_sigma = AgregatorSimulator.COST_SIGMA
 
     @property
     def decision_time(self):
@@ -294,17 +295,18 @@ class AgregatorSimulator(ControllerSimulator):
 
         """
 
-        common_unit = units.unit(units.convert(time, units.second))
         time = units.value(units.convert(time, units.second))
         delta_time = units.value(units.convert(delta_time, units.second))
 
         # If this is the decision time we simulate a cost and a forecast for the temperature.
         if int(time) % int(self._decision_time) == 0:
 
+            ratio = float(len(self.cost_reference)) / float(len(range(int(time), int(time + self._decision_time), int(delta_time))))
+            print "ratio: ", ratio
             j = 0
             cost = {}
             for i in range(int(time), int(time + self._decision_time), int(delta_time)):
-                cost[i] = max(0, self.cost_reference[j] + random.normalvariate(0, 1))
+                cost[i] = max(0, self.cost_reference[int(j * ratio)] + random.normalvariate(0, self.cost_sigma))
                 j += 1
 
             # Add the first cost for the day next
@@ -326,9 +328,10 @@ class AgregatorSimulator(ControllerSimulator):
 
     def update(self, time, delta_time):
         super(AgregatorSimulator, self).update(time, delta_time)
-        if time in self.temperature_outside_forecast.keys():
-            self.temperature = units.convert(units(self.temperature_outside_forecast[time], units.degC), units.kelvin)
+        if time - delta_time in self.temperature_outside_forecast.keys():
+            self.temperature = units.convert(units(self.temperature_outside_forecast[time - delta_time], units.degC), units.kelvin)
         else:
+            # First step of the simulation
             self.outside_process.set_time(time)
             self.temperature = self.outside_process.temperature
 
@@ -358,14 +361,13 @@ class AgregatorSimulator(ControllerSimulator):
             self.temperature_outside_forecast = {}
 
             # Day variance
-            corr = random.normalvariate(AgregatorSimulator.MU, AgregatorSimulator.VARIANCE_DAY)
+            corr = random.normalvariate(0, self.day_sigma)
 
             for k in range(int(start), int(start+stop), int(delta_time)):
                 self.outside_process.set_time(k * units.second)
 
                 # Apply a variance with a normal distribution add to the real temperature
-                corr += random.normalvariate(AgregatorSimulator.MU, AgregatorSimulator.VARIANCE)
-                # corr = 0
+                corr += random.normalvariate(0, self.period_sigma)
 
                 self.temperature_outside_forecast[k] = \
                     units.value(units.convert(getattr(self.outside_process, "temperature"), units.celsius)) + corr
@@ -560,7 +562,7 @@ class ForecastController(AgregatorElement):
             self.temperature = temperature
 
     def __init__(self, friendly_name, target_temperature, hysteresis, thermal_process, subject, attribute,
-                 decision_time, delta_time, on_value=True, off_value=False, position=Position()):
+                 decision_time, delta_time, solver=None, on_value=True, off_value=False, position=Position()):
 
         """
         A forecast controller. This class optimizes a thermal process given to a weather forecast and
@@ -689,6 +691,12 @@ class ForecastController(AgregatorElement):
         self._outside_coupling = None
         # self._external_process = []  # not used yet
         # self._external_coupling = []  # not used yet
+
+        # Cannot use pulp.GUROBI as default value parameter because msg=0 set false for the gurobi solver statically
+        if solver is None:
+            self.solver = pulp.GLPK(msg=0)
+        else:
+            self.solver = solver
 
     @property
     def outside_temperature_forecast(self):
@@ -948,11 +956,11 @@ class ForecastController(AgregatorElement):
         # Resolution and return
         #
 
-        # status = problem.solve(COIN_CMD("/opt/coin-Cbc-2.8/bin/cbc"))
-        self.status = problem.solve(pulp.GUROBI(msg=0))
+        problem.solve(self.solver)
         self.status = pulp.LpStatus[problem.status]
+
         if self.status is 'Infeasible':
-            raise RuntimeError("The problem is'nt feasible")
+            raise RuntimeError("The problem isn't feasible")
 
         return [
             dict([(k, pulp.value(v)) for k, v in _power_on.items()]),
