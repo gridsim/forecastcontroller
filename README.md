@@ -121,13 +121,12 @@ We explain now the mathematical model used by the forecast local controller whic
 LP are done thanks to [numberempire.com](http://fr.numberempire.com/texequationeditor/equationeditor.php)
 
 What we need is a power on/off decision for each slot of the decision period. Each decision step, the controller need
-to solve this model. The main controller send the cost vector for each slot (<msub><mo>c</mo><mi>tt</mi></msub>)
+to solve this model. The main controller send the cost vector for each slot and the weather forecast.
 
-<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-<msub>
-  <mi>c</mi>
-  <mi>s</mi>
-</msub>
-</math>
-
+* S:
+* E:
+* c<sub>s</sub>:
+* p<sub>s</sub>:
+* p<sub>s</sub>:
+* diff: 
 
