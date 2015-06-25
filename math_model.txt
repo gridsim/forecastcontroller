@@ -1,24 +1,23 @@
+\begin{align*}
 \begin{array}{llll}
-min. & \displaystyle{\sum_{s \in S}(c_s \cdot p_s + E \cdot e_s) + D \cdot diff}  & \ & (1) & \\
-
+min. & \displaystyle{\sum_{s \in S}(c_s \cdot p_s + E \cdot e_s) + D \cdot diff}  &  & (1) & \\
 {s.t.} & \displaystyle{\sum_{s \in S} t^{in}_{final(s)} \ge t_{mean}*|S| - diff} &  & (2) \\
-
 & \displaystyle{ \theta_{s}^{in} = t^{in}_{init} + \frac{p_s \cdot \sigma \cdot \delta}{C}} & \displaystyle{ \forall s \in S} & (3) \\
-
 & \displaystyle{\theta_{s}^{out} = \frac{\delta \cdot \lambda \cdot (t^{out}_s - t^{in}_s)}{C}} &  \displaystyle{ \forall s \in S}& (4) \\
-
 & \displaystyle{t^{in}_{final(s)} = \theta^{in}_s + \theta^{out}_s} & \displaystyle{ \forall s \in S} & (5) \\
-
 & \displaystyle{t^{in}_{final(s)} - e_s \le t_{mean} + \frac{\epsilon}{2}}& \displaystyle{ \forall s \in S} & (6) \\
-
 & \displaystyle{t^{in}_{final(s)} + e_s \ge t_{mean} - \frac{\epsilon}{2}}& \displaystyle{ \forall s \in S} & (7) \\
-
-& \displaystyle{t^{in}_{init(1)}} = \Theta & \displaystyle{} & (8) \\
-
+& \displaystyle{t^{in}_{init(1)}} = \Theta & & (8) \\
 & \displaystyle{t^{in}_{init(s)} = t^{in}_{final(s-1)}}& \displaystyle{\forall s \in S, s \gt 1} & (9) \\
 \end{array}
+\end{align*}
 
-
+S: toto \\
+E: titi \\
+c_s: ctra
+    
+    
+    
 
  def __external_leverage(self, thermal_capacity, thermal_conductivity, external_temperature, internal_temperature):
         return (self.delta_time / thermal_capacity) \
