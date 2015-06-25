@@ -15,14 +15,13 @@
   },
 
   "solver_configuration":{
-    "solvers":["gurobi", "cbc", "glpk"],
+    "solvers":["gurobi", "cplex", "cbc", "glpk"],
     "messages": "false",
     "time_limit_second":0
   },
 
   "device_configuration":{
     "number": 1,
-    "initial_outside_coupling": 20,
     "size_min_meter": 20,
     "size_max_meter": 400,
     "power_min_watt": 1000,

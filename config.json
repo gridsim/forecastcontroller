@@ -1,8 +1,8 @@
 {
   "simulation_configuration":{
-    "duration_day": 1,
+    "duration_day": 3,
     "decision_duration_day_period": 1,
-    "duration_minute_step": 30,
+    "duration_minute_step": 15,
     "weather_degree_period_sigma":0.2,
     "weather_degree_day_sigma":0.4,
     "cost_sigma": 1,
@@ -16,13 +16,12 @@
 
   "solver_configuration":{
     "solvers":["gurobi", "cplex", "cbc", "glpk"],
-    "messages": "false",
-    "time_limit_second":0
+    "messages": "true",
+    "time_limit_second":60
   },
 
   "device_configuration":{
     "number": 1,
-    "initial_outside_coupling": 20,
     "size_min_meter": 20,
     "size_max_meter": 400,
     "power_min_watt": 1000,
