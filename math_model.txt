@@ -1,7 +1,7 @@
 \begin{array}{llll}
 min. & \displaystyle{\sum_{s \in S}(c_s \cdot p_s + E \cdot e_s) + D \cdot diff}  & \ & (1) & \\
 
-{s.t.} & \displaystyle{\sum_{s \in S} t^{in}_{final(s)} \ge t_{mean}*|S|} &  & (2) \\
+{s.t.} & \displaystyle{\sum_{s \in S} t^{in}_{final(s)} \ge t_{mean}*|S| - diff} &  & (2) \\
 
 & \displaystyle{ \theta_{s}^{in} = t^{in}_{init} + \frac{p_s \cdot \sigma \cdot \delta}{C}} & \displaystyle{ \forall s \in S} & (3) \\
 
