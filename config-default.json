@@ -2,11 +2,11 @@
   "simulation_configuration":{
     "duration_day": 1,
     "decision_duration_day_period": 1,
-    "duration_minute_step": 30,
-    "weather_degree_period_sigma":0.2,
+    "duration_minute_slot": 30,
+    "weather_degree_slot_sigma":0.2,
     "weather_degree_day_sigma":0.4,
     "cost_sigma": 1,
-    "cost_period_step":
+    "cost_period_slot":
      [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
       2.0, 2.0, 3.0, 3.0, 4.0, 4.0, 2.0, 2.0, 2.0, 2.0,
       5.0, 5.0, 7.0, 7.0, 10.0, 10.0, 10.0, 10.0, 8.0, 8.0,

@@ -77,8 +77,8 @@ if __name__ == "__main__":
         json_config = json.load(json_config_file)
         START_TIME = 0
         DURATION_TIME = json_config["simulation_configuration"]["duration_day"] * units.day  # 1 * units.year
-        DECISION_DURATION_STEP = json_config["simulation_configuration"]["decision_duration_day_period"] * units.day
-        PERIOD_STEP = json_config["simulation_configuration"]["duration_minute_step"] * units.minute
+        DECISION_DURATION_SLOT = json_config["simulation_configuration"]["decision_duration_day_period"] * units.day
+        DURATION_MINUTE_SLOT = json_config["simulation_configuration"]["duration_minute_slot"] * units.minute
 
         try:
             # Buildings parameters
@@ -108,13 +108,13 @@ if __name__ == "__main__":
                 raise ConfigException("MAX_INDEX_NB_DEVICES", "The value must be greater or equal than zero")
 
             # Example of costs
-            COST = json_config["simulation_configuration"]["cost_period_step"]
+            COST = json_config["simulation_configuration"]["cost_period_slot"]
 
             if not units\
                 .value(
-                    units.convert(DECISION_DURATION_STEP, units.unit(PERIOD_STEP))
-                    ) / units.value(PERIOD_STEP) == len(COST):
-                print "WARNING: the cost_period_step ratio is not equal to the number for daily period."
+                    units.convert(DECISION_DURATION_SLOT, units.unit(DURATION_MINUTE_SLOT))
+                    ) / units.value(DURATION_MINUTE_SLOT) == len(COST):
+                print "WARNING: the cost_period_slot ratio is not equal to the number for daily slot."
 
             COUPLING_VARIANCE_MIN = json_config["device_configuration"]["coupling_min"]
             if not COUPLING_VARIANCE_MIN >= 0:
@@ -125,19 +125,19 @@ if __name__ == "__main__":
                 raise ConfigException("COUPLING_VARIANCE_MAX")
 
             TEMPERATURE_MIN = json_config["device_configuration"]["temperature_min"]
-            if not TEMPERATURE_MIN > -273.15:
-                raise ConfigException("TEMPERATURE_MIN", "Temperature min must be greater than -273.15 degrees")
+            if not TEMPERATURE_MIN >= -273.15:
+                raise ConfigException("TEMPERATURE_MIN", "Temperature min must be greater or equal than -273.15 degrees")
 
             TEMPERATURE_MAX = json_config["device_configuration"]["temperature_max"]
             if not TEMPERATURE_MAX > TEMPERATURE_MIN:
                 raise ConfigException("TEMPERATURE_MAX", "Temperature max must be greater than temperature min")
 
             DAY_SIGMA = json_config["simulation_configuration"]["weather_degree_day_sigma"]
-            PERIOD_SIGMA = json_config["simulation_configuration"]["weather_degree_period_sigma"]
+            SLOT_SIGMA = json_config["simulation_configuration"]["weather_degree_slot_sigma"]
             COST_SIGMA = json_config["simulation_configuration"]["cost_sigma"]
-            if not DAY_SIGMA >= 0 or not PERIOD_SIGMA >= 0 or not COST_SIGMA >= 0:
+            if not DAY_SIGMA >= 0 or not SLOT_SIGMA >= 0 or not COST_SIGMA >= 0:
                 raise ConfigException(
-                    "DAY_SIGMA, PERIOD_SIGMA or COST_SIGMA",
+                    "DAY_SIGMA, SLOT_SIGMA or COST_SIGMA",
                     "Value must be greater or equal than zero")
 
             message = 1 if json_config["solver_configuration"]["messages"] == "true" else 0
@@ -238,7 +238,7 @@ if __name__ == "__main__":
         # Parameter for the Agregator
         sim.agregator.cost_reference = COST
         sim.agregator.day_sigma = DAY_SIGMA
-        sim.agregator.period_sigma = PERIOD_SIGMA
+        sim.agregator.period_sigma = SLOT_SIGMA
         sim.agregator.cost_sigma = COST_SIGMA
 
         # Thermal heater with controller
@@ -248,8 +248,8 @@ if __name__ == "__main__":
                                                                   building,
                                                                   heater,
                                                                   'on',  # default: switch on
-                                                                  DECISION_DURATION_STEP,  # decision step
-                                                                  PERIOD_STEP,
+                                                                  DECISION_DURATION_SLOT,  # decision step
+                                                                  DURATION_MINUTE_SLOT,
                                                                   solver=SOLVER))
         forecastController.add(outside, coupling_outside)
 
@@ -258,7 +258,7 @@ if __name__ == "__main__":
         lstTemperatureMonitoring += [building]
 
 
-    sim.agregator.decision_time = DECISION_DURATION_STEP
+    sim.agregator.decision_time = DECISION_DURATION_SLOT
     sim.agregator.outside_process = outside
 
     lstTemperatureMonitoring += [sim.agregator]
@@ -284,7 +284,7 @@ if __name__ == "__main__":
 
     # Simulate
     sim.reset()
-    sim.run(DURATION_TIME, PERIOD_STEP)
+    sim.run(DURATION_TIME, DURATION_MINUTE_SLOT)
 
     for forecastController in lstForecast:
         print "+-------------------------------"
