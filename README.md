@@ -111,4 +111,9 @@ This section is devoted to the device configuration. It this application, we use
 * ```hysteresis_user_preference_min``` and ```hysteresis_user_preference_max``` the height of the building is randomly chosen between min and max
 * ```coupling_min``` and ```coupling_max``` the coupling of the building with outdoor
 * ```temperature_min``` and ```temperature_max``` the temperature preference for the building
-![Alt text](https://github.com/gridsim/forecastcontroller/tree/documentation/math_model.gif?raw=true)
+
+## Mathematical model for the forecast local controller
+
+![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_model.gif?raw=true "test")
+
+formulas done thanks to [numberempire.com](http://fr.numberempire.com/texequationeditor/equationeditor.php)
