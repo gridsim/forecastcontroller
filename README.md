@@ -123,10 +123,15 @@ LP are done thanks to [numberempire.com](http://fr.numberempire.com/texequatione
 What we need is a power on/off decision for each slot of the decision period. Each decision step, the controller need
 to solve this model. The main controller send the cost vector for each slot and the weather forecast.
 
+Data:
+
 * S:
 * E:
+* D:
+* p<sub>s</sub>:
+
+Decision variables:
+
 * c<sub>s</sub>:
-* p<sub>s</sub>:
-* p<sub>s</sub>:
 * diff: 
 
