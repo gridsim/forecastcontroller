@@ -116,11 +116,7 @@ This section is devoted to the device configuration. It this application, we use
 We explain now the mathematical model used by the forecast local controller which is sent to a ILP solver.
 
 
-![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_model.png?raw=true "math model")
-
-![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_variables.png?raw=true "math variables")
-
-LP are done thanks to [authorea.com](http://www.authorea.com)
+![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math.png?raw=true "math model")
 
 What we need is a power on/off decision for each slot of the decision period. Each decision step, the controller need
 to solve this model. The main controller send the cost vector for each slot and the weather forecast.
