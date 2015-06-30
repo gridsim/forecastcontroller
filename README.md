@@ -122,17 +122,25 @@ What we need is a power on/off decision for each slot of the decision period. Ea
 to solve this model. The main controller send the cost vector for each slot and the weather temperature forecast. For
 each device, we need data such as thermal capacity, thermal conductivity, efficiency, hysteresis, temperature reference, 
 delta time in seconds for a slot, the initial temperature of the building, the penalty for a temperature out of the hysteresis bound for a slot and
-penalty for a underestimate mean temperature 
+penalty for a underestimate average temperature 
 
-Ex: if we want a 20° C with 2° hysteresis we can keep a temperature between 19° and 21° and globally, the mean must be 20°. If
-a temperature during the slot <i>s</i> is out of the bound, we have a <i>E</i> penalty multiply by the temperature at slot <i>s</i>. If the mean temperature during the period
+Ex: if we want a 20° C with 2° hysteresis we can keep a temperature between 19° and 21° and globally, the average must be 20°. If
+a temperature during the slot <i>s</i> is out of the bound, we have a <i>E</i> penalty multiply by the temperature at slot <i>s</i>. If the average temperature during the period
 is lower than 20° the penalty will be <i>D</i> multiply by the difference.
 
 ### Explanation
-The optimization function (1) minimize the overall cost and penalty as discussed above.
+The optimization function <i>(1)</i> minimize the overall cost and penalty as discussed above.
  
-* The mean of temperature must be the reference temperature. If we are below, we consider a penalty (2).
-* With (3) and (4) we compute the inside and outside temperature leverage. Final temperature for a slot is the sum of leverages (5).
-* Exceeding temperature for each slot are computed thanks to (6) and (7).
-* We initialize the first slot inside temperature according to the real temperature of the building during the resolution process (8).
-* Each inside initial temperature of one slot is the same as the final inside temperature of the slot before (9).
+* The average of temperature must be the reference temperature. If we are below, we consider a penalty <i>(2)</i>.
+* With <i>(3)</i> and <i>(4)</i> we compute the inside and outside temperature leverage. Final temperature for a slot is the sum of leverages <i>(5)</i>.
+* Exceeding temperature for each slot are computed thanks to <i>(6) and <i>(7).
+* We initialize the first slot inside temperature according to the real temperature of the building during the resolution process <i>(8)</i>.
+* Each inside initial temperature of one slot is the same as the final inside temperature of the slot before <i>(9)</i>.
+
+## Output files for statistics
+Five png files are exported into the output directory indicating some information about the simulation:
+
+* <i>average_temperature.png</i> indicates the average temperature for each period through the time
+* <i>cost.png</i> the cost function for every period through the time
+* <i>error.png</i> the temperature error through the time
+* <i>heater.png</i> the on/off decision for each slot <i>(in Joule)</i>

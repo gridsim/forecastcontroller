@@ -1,6 +1,6 @@
 {
   "simulation_configuration":{
-    "duration_day": 30,
+    "duration_day": 3,
     "decision_duration_day_period": 1,
     "duration_minute_slot": 15,
     "weather_degree_slot_sigma":0.2,
@@ -21,7 +21,7 @@
   },
 
   "device_configuration":{
-    "number": 5,
+    "number": 1,
     "size_min_meter": 20,
     "size_max_meter": 400,
     "power_min_watt": 1000,

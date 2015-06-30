@@ -671,7 +671,7 @@ class ForecastController(AgregatorElement):
 
         # Used for computing
         self.countOptimization = 0
-        self.mean = target_temperature
+        self.average_temperature = target_temperature
         self.temperature_optimal = target_temperature
         self.old_temperature = target_temperature
 
@@ -1402,8 +1402,8 @@ class ForecastController(AgregatorElement):
         self.countOptimization += 1
         if len(self._history_temperature) > 0:
             self._history_temperature = self._history_temperature[-96:]
-            self.mean = units(numpy.mean(self._history_temperature), units.degC)
-            debug("| | + Mean: {}".format(self.mean))
+            self.average_temperature = units(numpy.mean(self._history_temperature), units.degC)
+            debug("| | + Mean: {}".format(self.average_temperature))
 
     def _detect_if_error_and_recompute_if_necessary(self, time):
         """
