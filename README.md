@@ -119,4 +119,20 @@ We explain now the mathematical model used by the forecast local controller whic
 ![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math.png?raw=true "math model")
 
 What we need is a power on/off decision for each slot of the decision period. Each decision step, the controller need
-to solve this model. The main controller send the cost vector for each slot and the weather forecast.
+to solve this model. The main controller send the cost vector for each slot and the weather temperature forecast. For
+each device, we need data such as thermal capacity, thermal conductivity, efficiency, hysteresis, temperature reference, 
+delta time in seconds for a slot, the initial temperature of the building, the penalty for a temperature out of the hysteresis bound for a slot and
+penalty for a underestimate mean temperature 
+
+Ex: if we want a 20° C with 2° hysteresis we can keep a temperature between 19° and 21° and globally, the mean must be 20°. If
+a temperature during the slot <i>s</i> is out of the bound, we have a <i>E</i> penalty multiply by the temperature at slot <i>s</i>. If the mean temperature during the period
+is lower than 20° the penalty will be <i>D</i> multiply by the difference.
+
+### Explanation
+The optimization function (1) minimize the overall cost and penalty as discussed above.
+ 
+* The mean of temperature must be the reference temperature. If we are below, we consider a penalty (2).
+* With (3) and (4) we compute the inside and outside temperature leverage. Final temperature for a slot is the sum of leverages (5).
+* Exceeding temperature for each slot are computed thanks to (6) and (7).
+* We initialize the first slot inside temperature according to the real temperature of the building during the resolution process (8).
+* Each inside initial temperature of one slot is the same as the final inside temperature of the slot before (9).
