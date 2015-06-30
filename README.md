@@ -116,8 +116,8 @@ This section is devoted to the device configuration. It this application, we use
 We explain now the mathematical model used by the forecast local controller which is sent to a ILP solver.
 
 
-![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_model.jpg?raw=true "math model")
-![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_explain.jpg?raw=true "explanation")
+![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_model.png?raw=true "math model")
+![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_variables.png?raw=true "math variables")
 
 LP are done thanks to [authorea.com](http://www.authorea.com)
 
