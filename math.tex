@@ -1,0 +1,79 @@
+ 
+\documentclass{article}
+\usepackage[affil-it]{authblk}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{latexsym}
+\usepackage{amsfonts,amsmath,amssymb}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false,pdfborder={0 0 0}}
+\usepackage{textcomp}
+\usepackage{longtable}
+\usepackage{multirow,booktabs}
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+
+
+\begin{document}
+
+\bibliographystyle{plain}
+
+
+
+
+\begin{align*}
+\begin{tabular}{llll}
+min. & $\displaystyle{\sum_{s \in S}(c_s \cdot p_s + E \cdot e_s) + D \cdot diff}$  &  & (1) \\
+{s.t.} & $\displaystyle{\sum_{s \in S} t^{in}_{final(s)} \ge t_{mean}*|S| - diff}$ &  & (2) \\
+& $\displaystyle{ \theta_{s}^{in} = t^{in}_{init(s)} + \frac{p_s \cdot \sigma \cdot \delta}{C}}$ & $\displaystyle{ \forall s \in S}$ & (3) \\
+& $\displaystyle{\theta_{s}^{out} = \frac{\delta \cdot \lambda \cdot (t^{out}_s - t^{in}_{final(s)})}{C}}$ &  $\displaystyle{ \forall s \in S}$ & (4) \\
+& $\displaystyle{t^{in}_{final(s)} = \theta^{in}_s + \theta^{out}_s}$ & $\displaystyle{ \forall s \in S}$ & (5) \\
+& $\displaystyle{t^{in}_{final(s)} - e_s \le t_{mean} + \frac{\epsilon}{2}}$ & $\displaystyle{ \forall s \in S}$ & (6) \\
+& $\displaystyle{t^{in}_{final(s)} + e_s \ge t_{mean} - \frac{\epsilon}{2}}$ & $\displaystyle{ \forall s \in S}$ & (7) \\
+& $\displaystyle{t^{in}_{init(1)}} = \Theta$ & & (8) \\
+& $\displaystyle{t^{in}_{init(s)} = t^{in}_{final(s-1)}}$ & $\displaystyle{ \forall s \in S, s \ge 1}$ & (9) \\
+\end{tabular}
+\end{align*}
+
+\noindent
+\textbf{Data:} \\
+\begin{tabular}{ l p{0.9\textwidth} }
+$S$: & The set of slots in a decision period \\
+$E$: & The weight of an exceeding temperature during a slot for the objective function \\
+$D$: & The weight of a negative exceeding mean temperature of a decision period \\
+$c_s$: & The cost of the slot $s$ \\
+$t^{out}_{s}$: & The outside temperature for the slot $s$\\
+$t_{mean}$: & The temperature reference for the building set by the user \\
+$\epsilon$: & The temperature hysteresis set by the user\\
+$C$: & Thermal capacity of the building \\
+$\Theta$: & The initial temperature of the building before proceeding the optimization \\
+$\sigma$: & The efficiency of the heat/cooler pomp \\
+$\delta$: & Number of seconds in a slot \\
+$\lambda$: & Thermal conductivity of the building with outside. \\
+\end{tabular} 
+\vspace{0.3cm}
+
+\noindent
+\textbf{Decision variables:} \\
+\begin{tabular}{ l p{0.9\textwidth} }
+$p_s$: & The on/off decision for the device for the slot $s$. \\
+$diff$: & The decision to accept a negative exceeding mean temperature for the whole period. \\
+$e_s$: & The exceeding temperature during the slot $s$. The temperature $t$ is exceeding if $t \ge t_{mean} + \frac {epsilon}{2}$ and $t \le t_{mean} - \frac {epsilon}{2}$. If this is the case, a penalty is computed on the minimization function. \\
+\end{tabular} 
+\vspace{0.3cm}
+
+\noindent
+\textbf{Intermediate decision variables:} \\
+\begin{tabular}{ l p{0.9\textwidth} }
+$t^{in}_{init(s)}$: & The initial temperature at slot $s$ before the outside and heating/cooling leverage. \\
+$t^{in}_{final(s)}$: & The final temperature at slot $s$ after the outside and heating/cooling leverage. \\
+$\theta^{in}_{s}$: & Temperature influenced by inside leverage properties (heating/cooling, thermal capacity, ...). \\
+$\theta^{out}_{s}$: & Temperature influenced by outside leverage properties (outside temperature, couping, ...).\\
+  
+\end{tabular} 
+  
+  
+
+\end{document}
+
