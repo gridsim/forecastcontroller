@@ -117,6 +117,7 @@ We explain now the mathematical model used by the forecast local controller whic
 
 
 ![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_model.png?raw=true "math model")
+
 ![Alt text](https://github.com/gridsim/forecastcontroller/blob/documentation/math_variables.png?raw=true "math variables")
 
 LP are done thanks to [authorea.com](http://www.authorea.com)
