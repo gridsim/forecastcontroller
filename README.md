@@ -133,7 +133,7 @@ The optimization function <i>(1)</i> minimize the overall cost and penalty as di
  
 * The average of temperature must be the reference temperature. If we are below, we consider a penalty <i>(2)</i>.
 * With <i>(3)</i> and <i>(4)</i> we compute the inside and outside temperature leverage. Final temperature for a slot is the sum of leverages <i>(5)</i>.
-* Exceeding temperature for each slot are computed thanks to <i>(6) and <i>(7).
+* Exceeding temperature for each slot are computed thanks to <i>(6)</i> and <i>(7)</i>.
 * We initialize the first slot inside temperature according to the real temperature of the building during the resolution process <i>(8)</i>.
 * Each inside initial temperature of one slot is the same as the final inside temperature of the slot before <i>(9)</i>.
 
