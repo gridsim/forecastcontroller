@@ -21,13 +21,13 @@
   },
 
   "device_configuration":{
-    "number": 5,
+    "number": 3,
     "size_min_meter": 20,
     "size_max_meter": 400,
     "power_min_watt": 1000,
     "power_max_watt": 5000,
     "height_min_meter": 10,
-    "height_max_meter": 30,
+    "height_max_meter": 20,
     "hysteresis_user_preference_min": 1,
     "hysteresis_user_preference_max": 3,
     "coupling_min": 40,
