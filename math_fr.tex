@@ -1,0 +1,79 @@
+ 
+\documentclass{article}
+\usepackage[affil-it]{authblk}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{latexsym}
+\usepackage{amsfonts,amsmath,amssymb}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false,pdfborder={0 0 0}}
+\usepackage{textcomp}
+\usepackage{longtable}
+\usepackage{multirow,booktabs}
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+
+
+\begin{document}
+
+\bibliographystyle{plain}
+
+
+
+
+\begin{align*}
+\begin{tabular}{llll}
+min. & $\displaystyle{\sum_{s \in S}(c_s \cdot p_s + E \cdot e_s) + D \cdot diff}$  &  & (1) \\
+{s.t.} & $\displaystyle{\sum_{s \in S} t^{in}_{final(s)} \ge t_{mean}*|S| - diff}$ &  & (2) \\
+& $\displaystyle{ \theta_{s}^{in} = t^{in}_{init(s)} + \frac{p_s \cdot \sigma \cdot \delta}{C}}$ & $\displaystyle{ \forall s \in S}$ & (3) \\
+& $\displaystyle{\theta_{s}^{out} = \frac{\delta \cdot \lambda \cdot (t^{out}_s - t^{in}_{final(s)})}{C}}$ &  $\displaystyle{ \forall s \in S}$ & (4) \\
+& $\displaystyle{t^{in}_{final(s)} = \theta^{in}_s + \theta^{out}_s}$ & $\displaystyle{ \forall s \in S}$ & (5) \\
+& $\displaystyle{t^{in}_{final(s)} - e_s \le t_{mean} + \frac{\epsilon}{2}}$ & $\displaystyle{ \forall s \in S}$ & (6) \\
+& $\displaystyle{t^{in}_{final(s)} + e_s \ge t_{mean} - \frac{\epsilon}{2}}$ & $\displaystyle{ \forall s \in S}$ & (7) \\
+& $\displaystyle{t^{in}_{init(1)}} = \Theta$ & & (8) \\
+& $\displaystyle{t^{in}_{init(s)} = t^{in}_{final(s-1)}}$ & $\displaystyle{ \forall s \in S, s \ge 1}$ & (9) \\
+\end{tabular}
+\end{align*}
+
+\noindent
+\textbf{Données:} \\
+\begin{tabular}{ l p{0.9\textwidth} }
+$S$: & L'ensemble des créneaux pour une période de décision \\
+$E$: & Le poids pour une température hors de la préférence utilisateur dans la fonction objectif \\
+$D$: & Le poids pour un dépassement négatif de la température moyenne durant une période de décision \\
+$c_s$: & Le coût du créneau $s$ \\
+$t^{out}_{s}$: & La température extérieur du créneau $s$\\
+$t_{mean}$: & La température de référence pour le bâtiment déterminé par l'utilisateur \\
+$\epsilon$: & L'hystérisis de la température déterminé selon la préférence de l'utilisateur\\
+$C$: & Capacité thermale du bâtiment \\
+$\Theta$: & La température initiale du bâtiment avant de procéder à l'optimisation \\
+$\sigma$: & L'efficacité de la pompe à chaleur \\
+$\delta$: & Nombre de secondes dans un créneau \\
+$\lambda$: & Conductivité thermale du bâtiment avec l'extérieur \\
+\end{tabular} 
+\vspace{0.3cm}
+
+\noindent
+\textbf{Variables de décision:} \\
+\begin{tabular}{ l p{0.9\textwidth} }
+$p_s$: & La décision on/off de l'appareil pour le créneau $s$. \\
+$diff$: & Décision d'accepter ou non une température moyenne négative durant toute la période d'optimisation (incluant une forte pénalité). \\
+$e_s$: & Le dépassement de la température durant le créneau $s$ par rapport à la préférence utilisateur. La température $t$ a été dépassée si  $t \ge t_{mean} + \frac {epsilon}{2}$ et $t \le t_{mean} - \frac {epsilon}{2}$. Si c'est le cas, une pénalité est calculée.  \\
+\end{tabular} 
+\vspace{0.3cm}
+
+\noindent
+\textbf{Variables de décisions intermédiaires:} \\
+\begin{tabular}{ l p{0.9\textwidth} }
+$t^{in}_{init(s)}$: & La température initiale au créneau $s$ avant l'influence météo et du radiateur.\\
+$t^{in}_{final(s)}$: & La température finale au créneau $s$ après l'influence extérieur et du radiateur. \\
+$\theta^{in}_{s}$: & Température influencée par les appareils et la capacité thermale (pompe à chaleur, radiateur,...) \\
+$\theta^{out}_{s}$: & Température influencée par l'extérieur (température, couplage avec l'extérieur, ...).\\
+  
+\end{tabular} 
+  
+  
+
+\end{document}
+
