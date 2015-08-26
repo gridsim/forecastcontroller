@@ -16,8 +16,8 @@
 
   "solver_configuration":{
     "solvers":["gurobi", "cplex", "cbc", "glpk"],
-    "messages": "true",
-    "time_limit_second":60
+    "messages": "false",
+    "time_limit_second":0
   },
 
   "device_configuration":{

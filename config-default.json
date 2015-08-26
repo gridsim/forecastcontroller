@@ -1,6 +1,6 @@
 {
   "simulation_configuration":{
-    "duration_day": 1,
+    "duration_day": 30,
     "decision_duration_day_period": 1,
     "duration_minute_slot": 30,
     "weather_degree_slot_sigma":0.2,
@@ -21,13 +21,13 @@
   },
 
   "device_configuration":{
-    "number": 1,
+    "number": 3,
     "size_min_meter": 20,
     "size_max_meter": 400,
     "power_min_watt": 1000,
     "power_max_watt": 5000,
-    "height_min_meter": 3,
-    "height_max_meter": 50,
+    "height_min_meter": 10,
+    "height_max_meter": 20,
     "hysteresis_user_preference_min": 1,
     "hysteresis_user_preference_max": 3,
     "coupling_min": 40,
